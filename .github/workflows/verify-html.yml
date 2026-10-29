@@ -1,0 +1,25 @@
+name: Verify direct HTML opening
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['verification/verify_browser.py', 'verification/fixtures/**', '.github/workflows/verify-html.yml']
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare browser test tools
+        run: |
+          python3 -m venv "$RUNNER_TEMP/browser-check"
+          "$RUNNER_TEMP/browser-check/bin/pip" install playwright
+      - name: Open the local HTML and exercise offline behavior
+        run: '"$RUNNER_TEMP/browser-check/bin/python" verification/verify_browser.py'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-html-verification
+          path: verification/direct-html-test.json
