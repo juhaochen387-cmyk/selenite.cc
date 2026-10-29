@@ -43,3 +43,7 @@ This environment's browser policy blocks `file://` navigation. Direct HTML openi
 - Font: Mulish; icons: Google Material Design Icons
 
 Original game/library license files are retained where present. The launcher source is in `source-adaptation/server.go`. All HTML, JavaScript, styles and assets are directly editable.
+
+## Additional direct HTML verification
+
+After the original environment blocked file URLs, a standard Chrome runner successfully opened the local `index.html` and verified navigation, favorites, cross-page settings storage, 2048 gameplay, and loading the local Flash file through Ruffle. There were no page errors or outside requests. See `verification/direct-html-test.json` and https://github.com/juhaochen387-cmyk/selenite.cc/actions/runs/40791547271. This does not establish compatibility for every game, browser or platform.

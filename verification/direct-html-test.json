@@ -1,0 +1,19 @@
+{
+  "direct_html_open": true,
+  "favorites": true,
+  "cross_page_file_storage": true,
+  "2048_gameplay": true,
+  "ruffle_player": true,
+  "ruffle_metadata": {
+    "width": 200,
+    "height": 256,
+    "frameRate": 12,
+    "numFrames": 5,
+    "swfVersion": 4,
+    "backgroundColor": "#000000",
+    "isActionScript3": false,
+    "uncompressedLength": 20428
+  },
+  "page_errors": [],
+  "external_requests": []
+}
