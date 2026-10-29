@@ -10,7 +10,7 @@ If the first release is still building, the build-status link shows its progress
 
 This repository contains the editable application, fonts and runtime libraries, source for the optional local launcher, recorded verification results, and the package-building tools. The game/app binaries are distributed in Releases rather than regular Git commits.
 
-**GitHub's “Code → Download ZIP” is the application source, not the complete game library.** Use the Release download for the prepared offline copy. To prepare the library from a source checkout yourself, run `python3 tools/prepare-library.py` once while online. This downloads the pinned public mirror (several GB) and creates the local data bundles. There is no build step after setup: open `index.html`, or run the included launcher if an engine requires HTTP.
+**GitHub's “Code → Download ZIP” is the application source, not the complete game library.** Use the Release download for the prepared offline copy. To prepare the library from a source checkout yourself, install Python 3 and Git, then run `python3 tools/prepare-library.py` once while online. This downloads the pinned public mirror (several GB) and creates the local data bundles. There is no build step after setup: open `index.html`, or run the included launcher if an engine requires HTTP.
 
 ## Limits
 
