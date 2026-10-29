@@ -1,0 +1,235 @@
+body {
+ justify-content: flex-start;
+}
+
+section {
+ min-width: 20%;
+ min-height: 420px;
+ padding: 8px;
+ margin: 16px;
+ background-color: color-mix(in srgb, var(--color-2) 40%, #00000000 60%);
+ display: flex;
+ flex-direction: column;
+ /* justify-content: center; */
+ align-items: center;
+ flex-wrap: wrap;
+ border-radius: 20px;
+ margin: 15px;
+ transition-duration: 0.25s;
+ backdrop-filter: blur(2px);
+ box-shadow: 0 0 10px var(--color-2);
+}
+sections {
+ width: 90vw;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-wrap: wrap;
+}
+
+#colorPicker {
+ margin: 6px;
+}
+
+.feedback {
+ min-height: 16px;
+ font-size: 14px;
+ margin: 6px 4px 0;
+ text-align: center;
+}
+
+.feedback.error {
+ color: #ff8a8a;
+}
+
+.feedback.success {
+ color: #7cffb2;
+}
+
+.toggleRow {
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+ justify-content: center;
+ gap: 10px;
+ width: 100%;
+ margin: 6px 0;
+}
+
+.toggleRow label {
+ cursor: pointer;
+}
+
+.toggleRow .switch {
+ display: inline-flex;
+ align-items: center;
+ flex: none;
+}
+
+.toggleRow .switch input[type=checkbox] {
+ position: absolute;
+ width: 1px;
+ height: 1px;
+ margin: -1px;
+ padding: 0;
+ overflow: hidden;
+ clip: rect(0, 0, 0, 0);
+ white-space: nowrap;
+ border: 0;
+}
+
+.toggleRow .switchTrack {
+ display: inline-block;
+ box-sizing: border-box;
+ width: 42px;
+ height: 24px;
+ border-radius: 999px;
+ background-color: color-mix(in srgb, var(--color-4) 60%, #00000000 40%);
+ border: 2px solid var(--color-3);
+ position: relative;
+ transition-duration: 0.25s;
+}
+
+.toggleRow .switchTrack::after {
+ content: "";
+ position: absolute;
+ top: 2px;
+ left: 2px;
+ width: 16px;
+ height: 16px;
+ border-radius: 50%;
+ background-color: var(--text-color);
+ transition-duration: 0.25s;
+}
+
+.toggleRow .switch:hover .switchTrack {
+ filter: brightness(1.15);
+}
+
+.toggleRow .switch input[type=checkbox]:checked ~ .switchTrack {
+ background-color: var(--color-1);
+ border-color: var(--color-1);
+}
+
+.toggleRow .switch input[type=checkbox]:checked ~ .switchTrack::after {
+ transform: translateX(18px);
+ background-color: var(--bg-2);
+}
+
+.toggleRow .switch input[type=checkbox]:focus-visible ~ .switchTrack {
+ outline: 2px solid var(--color-1);
+ outline-offset: 2px;
+}
+
+#hiddenGamesSection {
+ width: min(640px, 90vw);
+}
+
+.hiddenGamesRow {
+ display: flex;
+ flex-direction: row;
+ flex-wrap: wrap;
+ justify-content: center;
+ align-items: stretch;
+ gap: 16px;
+ width: 100%;
+}
+
+.hiddenGamesControls {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ gap: 10px;
+ flex: 1 1 220px;
+}
+
+#hiddenGamesList {
+ width: auto;
+ flex: 1 1 260px;
+ align-self: flex-start;
+ height: 340px;
+ min-height: 0;
+ overflow-y: auto;
+ contain: layout;
+ border: 1px solid color-mix(in srgb, var(--color-1) 50%, #00000000 50%);
+ border-radius: 12px;
+ padding: 8px;
+ margin: 0;
+ box-sizing: border-box;
+}
+
+.hidden-game-row {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ margin: 4px 0;
+ width: 100%;
+}
+
+.hidden-game-row input[type=checkbox] {
+ position: absolute;
+ width: 1px;
+ height: 1px;
+ margin: -1px;
+ padding: 0;
+ overflow: hidden;
+ clip: rect(0, 0, 0, 0);
+ white-space: nowrap;
+ border: 0;
+}
+
+.hidden-game-row .checkboxBox {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ box-sizing: border-box;
+ width: 18px;
+ height: 18px;
+ min-width: 18px;
+ border: 2px solid var(--color-1);
+ border-radius: 4px;
+ background-color: color-mix(in srgb, var(--color-4) 40%, #00000000 60%);
+ cursor: pointer;
+ transition-duration: 0.25s;
+}
+
+.hidden-game-row:hover .checkboxBox {
+ border-color: var(--text-color);
+ background-color: color-mix(in srgb, var(--color-3) 50%, #00000000 50%);
+}
+
+.hidden-game-row input[type=checkbox]:checked ~ .checkboxBox {
+ background-color: var(--color-1);
+ border-color: var(--color-1);
+}
+
+.hidden-game-row input[type=checkbox]:checked ~ .checkboxBox::after {
+ content: "";
+ width: 4px;
+ height: 8px;
+ margin-bottom: 2px;
+ border: solid var(--bg-2);
+ border-width: 0 2px 2px 0;
+ transform: rotate(45deg);
+}
+
+.hidden-game-row input[type=checkbox]:focus-visible ~ .checkboxBox {
+ outline: 2px solid var(--color-1);
+ outline-offset: 2px;
+}
+
+#hiddenGamesSearch {
+ width: min(280px, 90%);
+}
+
+@-moz-document url-prefix() {
+ section {
+ backdrop-filter: blur(0);
+ }
+}
+
+body[fast] section {
+ background-color: color-mix(in srgb, var(--color-2) 70%, #000000 30%);
+ backdrop-filter: blur(0);
+}

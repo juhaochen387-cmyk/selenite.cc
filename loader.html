@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html class="sl-theme-dark" lang="en">
+ <head><meta charset="utf-8"><script src="./js/offline-data.js"></script><script src="./js/offline-runtime.js"></script>
+ 
+
+ <!-- initialize theme vars
+ https://coolors.co/10002b-240046-3c096c-5a189a-7b2cbf-9d4edd-c77dff-e0aaff -->
+
+ <!-- initialize externals -->
+
+ <!-- initialize my stuff -->
+ <script src="js/all.min.js" defer></script>
+ <script defer>
+ let gameData = {};
+ function recordRecentlyPlayed(directory) {
+ if (!directory) return;
+ let recent = [];
+ try {
+ recent = JSON.parse(localStorage.getItem("selenite.recentlyPlayed") || "[]");
+ } catch {
+ recent = [];
+ }
+ recent = recent.filter((dir) => dir !== directory);
+ recent.unshift(directory);
+ if (recent.length > 20) recent.length = 20;
+ localStorage.setItem("selenite.recentlyPlayed", JSON.stringify(recent));
+ }
+ function handlePanicKeydown(e) {
+ let panic;
+ try {
+ panic = JSON.parse(localStorage.getItem("selenite.panic-mode") || "{}");
+ } catch {
+ return;
+ }
+ if (panic.key && panic.url && e.key.toLowerCase() === panic.key.toLowerCase()) {
+ location.href = panic.url;
+ }
+ }
+ document.addEventListener("keydown", handlePanicKeydown);
+ document.addEventListener("DOMContentLoaded", () => {
+ const gameFrame = document.getElementById("gameFrame");
+ const gameImage = document.getElementById("gameImage");
+ const gameName = document.getElementById("gameName");
+ const infobox = document.getElementById("infobox");
+ const toggle = document.getElementById("infobox-toggle");
+
+ const params = new URLSearchParams(location.search);
+ if (params.has("dir")) {
+ const prefix = params.get("type") == "g" ? "semag" : "sppa";
+ gameData.type = params.get("type");
+ gameData.path = params.get("dir");
+ gameFrame.src = `/resources/${prefix}/${gameData.path}/index.html`;
+ gameImage.src = `/resources/${prefix}/${gameData.path}/${params.get("img")}`;
+ gameName.innerText = decodeURIComponent(params.get("title"));
+ recordRecentlyPlayed(gameData.path);
+ } else if (localStorage.getItem("selenite.lastGame")) {
+ const game = JSON.parse(decodeURIComponent(atob(localStorage.getItem("selenite.lastGame"))));
+ gameData.type = game[3];
+ gameData.path = game[0];
+ const prefix = gameData.type == "g" ? "semag" : "sppa";
+ gameFrame.src = `/resources/${prefix}/${gameData.path}/index.html`;
+ gameImage.src = `/resources/${prefix}/${gameData.path}/${decodeURIComponent(game[1])}`;
+ gameName.innerText = game[2];
+ recordRecentlyPlayed(gameData.path);
+ }
+
+ gameFrame.addEventListener("load", () => {
+ try {
+ gameFrame.contentWindow.document.addEventListener("keydown", handlePanicKeydown);
+ } catch { }
+ });
+
+ document.getElementById("fullscreen").addEventListener("click", () => gameFrame.requestFullscreen());
+ document.getElementById("reload").addEventListener("click", () => { gameFrame.src = gameFrame.src; });
+ document.getElementById("open").addEventListener("click", () => window.open(gameFrame.src));
+ document.getElementById("share").addEventListener("click", () => {
+ navigator.clipboard.writeText(location.origin + "#/" + gameData.type + "/" + gameData.path);
+ });
+
+ const isMobile = window.innerWidth <= 660;
+ const savedCollapsed = localStorage.getItem("selenite.infobarCollapsed");
+ const startCollapsed = savedCollapsed !== null ? savedCollapsed === "true" : isMobile;
+ if (startCollapsed) infobox.classList.add("collapsed");
+ toggle.addEventListener("click", () => {
+ const collapsed = infobox.classList.toggle("collapsed");
+ localStorage.setItem("selenite.infobarCollapsed", String(collapsed));
+ });
+
+ fetch("/api/analytics/game", {
+ method: "POST",
+ headers: { "Content-Type": "application/json" },
+ body: JSON.stringify({ type: gameData.type, path: gameData.path })
+ });
+
+ let playTimeDirty = false;
+ let playTimeCache = JSON.parse(localStorage.getItem("selenite.playTime") || "{}");
+ setInterval(() => {
+ if (!gameData.path) return;
+ const date = getDate();
+ if (!playTimeCache[date]) playTimeCache[date] = {};
+ playTimeCache[date][gameData.path] = (playTimeCache[date][gameData.path] || 0) + 1;
+ playTimeDirty = true;
+ }, 1000);
+ setInterval(() => {
+ if (playTimeDirty) {
+ localStorage.setItem("selenite.playTime", JSON.stringify(playTimeCache));
+ playTimeDirty = false;
+ }
+ }, 10000);
+ });
+ </script>
+
+ <link rel="stylesheet" href="css/main.css" />
+ <link rel="stylesheet" href="css/pages.css" />
+ <link rel="stylesheet" href="css/loader.css" />
+ <!-- seo + other things -->
+ <title>Selenite</title>
+ <link rel="icon" href="favicon.ico" />
+ </head>
+ <body>
+ <iframe id="gameFrame" allow="cross-origin-isolated"></iframe>
+ <div id="infobox">
+ <div id="infobox-content">
+ <img id="gameImage" src="favicon.png" />
+ <h2 id="gameName">Selenite</h2>
+ <div class="opposite">
+ <img class="button" id="reload" src="img/reload.svg">
+ <img class="button" id="fullscreen" src="img/fullscreen.svg">
+ <img class="button" id="open" src="img/open.svg">
+ <img class="button" id="share" src="img/share.svg">
+ </div>
+ </div>
+ </div>
+ <img id="infobox-toggle" src="img/up.svg" />
+ </body>
+</html>

@@ -1,0 +1,137 @@
+[
+  {
+    "original": "https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js",
+    "local": "vendor/downloaded/0ae1715b6235599099b8.js"
+  },
+  {
+    "original": "https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@2.2.0/dist/jquery.min.js",
+    "local": "vendor/downloaded/22b126ea51bd3ad9b74b.js"
+  },
+  {
+    "original": "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jszip@3.7.1/dist/jszip.min.js",
+    "local": "vendor/downloaded/b46f0a538528b8208787.js"
+  },
+  {
+    "original": "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js",
+    "local": "vendor/downloaded/c6e32c63b18af5bb82f2.js"
+  },
+  {
+    "original": "https://code.jquery.com/jquery-1.12.4.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js",
+    "local": "vendor/downloaded/c6e32c63b18af5bb82f2.js"
+  },
+  {
+    "original": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.js",
+    "source": "https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/p5.js",
+    "local": "vendor/downloaded/621cac17bf00ae3a6de3.js"
+  },
+  {
+    "original": "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css",
+    "source": "https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css",
+    "local": "vendor/downloaded/f21f62125f307bb45617.css"
+  },
+  {
+    "original": "https://code.jquery.com/jquery-3.6.0.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js",
+    "local": "vendor/downloaded/02c0e093a9415bd9616f.js"
+  },
+  {
+    "original": "https://code.jquery.com/jquery-1.2.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js",
+    "local": "vendor/downloaded/c6e32c63b18af5bb82f2.js"
+  },
+  {
+    "original": "http://code.jquery.com/jquery-1.2.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js",
+    "local": "vendor/downloaded/c6e32c63b18af5bb82f2.js"
+  },
+  {
+    "original": "https://cdnjs.cloudflare.com/ajax/libs/promise-polyfill/8.3.0/polyfill.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/promise-polyfill@8.3.0/dist/polyfill.min.js",
+    "local": "vendor/downloaded/cdfb46550b926f3e4fb9.js"
+  },
+  {
+    "original": "https://unpkg.com/@webcomponents/webcomponentsjs@2.8.0/webcomponents-bundle.js",
+    "source": "https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.8.0/webcomponents-bundle.js",
+    "local": "vendor/downloaded/34fb9efc322b04677e27.js"
+  },
+  {
+    "original": "https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.6/processing.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/processing-js@1.6.6/processing.min.js",
+    "local": "vendor/downloaded/35b99da4af8e9f17d020.js"
+  },
+  {
+    "original": "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@1.11.3/dist/jquery.min.js",
+    "local": "vendor/downloaded/5c2c394bc9bc279956ba.js"
+  },
+  {
+    "original": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js",
+    "local": "vendor/downloaded/9e5f6334b3d4607ebd63.js"
+  },
+  {
+    "original": "https://code.jquery.com/jquery-2.2.3.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@2.2.3/dist/jquery.min.js",
+    "local": "vendor/downloaded/75802e6b59362e8862b2.js"
+  },
+  {
+    "original": "https://code.jquery.com/jquery-2.1.3.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js",
+    "local": "vendor/downloaded/1f6ce26e5faf1e00d987.js"
+  },
+  {
+    "original": "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js",
+    "local": "vendor/downloaded/02c0e093a9415bd9616f.js"
+  },
+  {
+    "original": "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery-ui-touch-punch@0.2.3/jquery.ui.touch-punch.min.js",
+    "local": "vendor/downloaded/d63956d58d09b65a41a8.js"
+  },
+  {
+    "original": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@2.1.1/dist/jquery.min.js",
+    "local": "vendor/downloaded/70b49371691fb5aeebd0.js"
+  },
+  {
+    "original": "http://code.jquery.com/jquery-2.1.1.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@2.1.1/dist/jquery.min.js",
+    "local": "vendor/downloaded/70b49371691fb5aeebd0.js"
+  },
+  {
+    "original": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/addons/p5.sound.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/addons/p5.sound.min.js",
+    "local": "vendor/downloaded/706db8b1b66dbb69515a.js"
+  },
+  {
+    "original": "http://code.jquery.com/jquery-1.2.2.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js",
+    "local": "vendor/downloaded/c6e32c63b18af5bb82f2.js"
+  },
+  {
+    "original": "https://code.jquery.com/jquery-2.2.4.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js",
+    "local": "vendor/downloaded/13237ae9b10c2675558e.js"
+  },
+  {
+    "original": "https://code.jquery.com/jquery-1.2.2.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js",
+    "local": "vendor/downloaded/c6e32c63b18af5bb82f2.js"
+  },
+  {
+    "original": "https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.2.1/math.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/mathjs@3.2.1/dist/math.min.js",
+    "local": "vendor/downloaded/4c8f836fa60fe1228188.js"
+  },
+  {
+    "original": "https://unpkg.com/kaboom@2001.0.0-alpha.21/dist/kaboom.js",
+    "source": "https://cdn.jsdelivr.net/npm/kaboom@2001.0.0-alpha.21/dist/kaboom.js",
+    "local": "vendor/downloaded/d16593bc5025546ce3ba.js"
+  }
+]

@@ -1,0 +1,5 @@
+resources/semag/
+resources/sppa/
+build/
+*.writing
+__pycache__/

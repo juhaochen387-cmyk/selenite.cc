@@ -1,0 +1,43 @@
+[
+  {
+    "directory": "minesweeper",
+    "bundledKeys": 5,
+    "canvases": 0,
+    "rufflePlayers": 1,
+    "bodyText": "",
+    "errors": [],
+    "remote_requests": [],
+    "native_binary_requests": []
+  },
+  {
+    "directory": "slope",
+    "bundledKeys": 7,
+    "canvases": 1,
+    "rufflePlayers": 0,
+    "bodyText": "",
+    "errors": [],
+    "remote_requests": [
+      "https://onebigstatic-tmm.tbt.mx/static/https://config.uca.cloud.unity3d.com",
+      "https://onebigstatic-tmm.tbt.mx/static/https://t.y8.com/log",
+      "https://onebigstatic-tmm.tbt.mx/static/https://t.y8.com/log",
+      "https://onebigstatic-tmm.tbt.mx/static/https://playtomic.y8.com/v1?hash=1",
+      "https://onebigstatic-tmm.tbt.mx/static/https://account.y8.com/api/v1/json/time/server/unix",
+      "https://account.y8.com/api/user_data/autologin?callback=idnet_autologin&app_id=55961e5ee694aa0ae90003e8",
+      "https://onebigstatic-tmm.tbt.mx/static/https://account.y8.com/api/v1/json/protection-lists",
+      "https://onebigstatic-tmm.tbt.mx/static/https://account.y8.com/api/v1/json/protection-lists",
+      "https://onebigstatic-tmm.tbt.mx/static/https://account.y8.com/api/v1/json/protection-lists",
+      "https://onebigstatic-tmm.tbt.mx/static/https://cdp.cloud.unity3d.com/v1/events"
+    ],
+    "native_binary_requests": []
+  },
+  {
+    "directory": "cookieclicker",
+    "bundledKeys": 398,
+    "canvases": 22,
+    "rufflePlayers": 0,
+    "bodyText": "Cookie Clicker\u2122 \u00a9 Orteil, 2023 -\ntwitter\ntumblr\n?\nCookie Clicker for Android\nCookie Clicker on Steam\nRandomGen\nIdle Game Maker\nChange language\nOther versions\nTr",
+    "errors": [],
+    "remote_requests": [],
+    "native_binary_requests": []
+  }
+]

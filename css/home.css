@@ -1,0 +1,50 @@
+.homeNav {
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: center;
+ gap: 16px;
+ max-width: 700px;
+ margin-top: 24px;
+}
+.navCard {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ gap: 10px;
+ width: 110px;
+ height: 100px;
+ border-radius: 16px;
+ background-color: color-mix(in srgb, var(--color-2) 40%, #00000000 60%);
+ box-shadow: 0 0 10px var(--color-2);
+ backdrop-filter: blur(2px);
+ text-decoration: none;
+ color: var(--text-color);
+ transition-duration: 0.25s;
+}
+.navCard:hover {
+ transform: scale(1.1);
+}
+.navCard img {
+ width: 32px;
+ height: 32px;
+ user-select: none;
+}
+.navCard span {
+ font-size: 14px;
+}
+body[fast] .navCard {
+ background-color: color-mix(in srgb, var(--color-2) 70%, #000000 30%);
+ backdrop-filter: blur(0);
+}
+@-moz-document url-prefix() {
+ .navCard {
+ backdrop-filter: blur(0);
+ }
+}
+@media screen and (max-width: 500px) {
+ .navCard {
+ width: 90px;
+ height: 85px;
+ }
+}

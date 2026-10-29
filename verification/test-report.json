@@ -1,0 +1,24 @@
+{
+  "shell": {
+    "title": "Study math for free - Mathplanet",
+    "frames": 2,
+    "home_heading": "selenite."
+  },
+  "catalog_count": 427,
+  "loaded_text": "427 games loaded!",
+  "search_visible": 2,
+  "empty_state": true,
+  "favorite_added": 1,
+  "filter_panel": true,
+  "game_title": "2048",
+  "2048_initial_tiles": 2,
+  "2048_after_moves": 5,
+  "theme": "grass",
+  "custom_theme": "\n\t\t--text-color: #fff;\n    \t--bg-1: #002954;\n    \t--bg-2: #00002c;\n    \t--color-1: #336699;\n    \t--color-2: #003c6b;\n    \t--color-3: #00173f;\n    \t--color-4: #00001b;\t\n\t",
+  "hidden_search_rows": 2,
+  "hidden_game_count": "426 games loaded (1 hidden)",
+  "flash_player": 1,
+  "errors": [],
+  "remote_requests": [],
+  "http_failures": []
+}

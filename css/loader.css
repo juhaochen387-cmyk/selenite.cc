@@ -1,0 +1,103 @@
+body {
+ overflow: hidden;
+}
+#gameFrame {
+ width: 100vw;
+ height: 100vh;
+ margin: 0;
+ background-color: black;
+}
+#infobox {
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ background: #000000;
+ transition: transform 0.3s ease;
+ z-index: 10;
+}
+#infobox.collapsed {
+ transform: translateY(100%);
+}
+#infobox:hover {
+ transform: translateY(0);
+}
+#infobox-toggle {
+ position: fixed;
+ bottom: calc(10vh + 8px);
+ right: 12px;
+ width: 28px;
+ height: 28px;
+ cursor: pointer;
+ opacity: 0.5;
+ z-index: 11;
+ transition: opacity 0.2s, transform 0.3s, bottom 0.3s;
+}
+#infobox-toggle:hover {
+ opacity: 1;
+}
+#infobox.collapsed ~ #infobox-toggle {
+ transform: rotate(180deg);
+ bottom: 8px;
+}
+#infobox-content {
+ height: 10vh;
+ width: 100%;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+#infobox-content img {
+ height: 90%;
+ margin: 0.5%;
+ aspect-ratio: 1 / 1;
+ border-radius: 8px;
+}
+#infobox-content h2 {
+ margin-right: auto;
+}
+.button {
+ margin: 4px;
+ padding: 2px;
+ width: 7%;
+ transition-duration: 0.25s;
+ cursor: pointer;
+ filter: brightness(0.9);
+}
+.button:hover {
+ filter: brightness(1);
+ transform: scale(1.1);
+}
+.button:active {
+ filter: brightness(1.2);
+ transform: scale(0.95);
+}
+.opposite {
+ width: 50%;
+ height: 100%;
+ display: flex;
+ justify-content: flex-end;
+ align-items: center;
+ margin: 12px;
+}
+@-moz-document url-prefix() {
+ #gamecontainer {
+ backdrop-filter: blur(0);
+ }
+}
+body[fast] #gamecontainer {
+ background-color: color-mix(in srgb, var(--color-2) 70%, #000000 30%);
+ backdrop-filter: blur(0);
+}
+@media screen and (max-width: 660px) {
+ #infobox-content h2 {
+ max-width: 45%;
+ font-size: 16px;
+ }
+ .button {
+ width: 22%;
+ margin: 0.5%;
+ aspect-ratio: 1 / 1;
+ border-radius: 8px;
+ }
+}

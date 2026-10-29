@@ -1,0 +1,231 @@
+.game {
+    width: 20vw;
+    height: 9vh;
+    min-height: 64px;
+    max-height: 9vh;
+    overflow: hidden;
+    background-color: color-mix(in srgb, var(--color-2) 40%, #00000000 60%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 20px;
+    margin: 15px;
+    /* transition-duration: 0.25s; */
+    box-shadow: 0 0 10px var(--color-2);
+    text-decoration: none;
+    content-visibility: auto;
+    contain-intrinsic-size: 20vw 9vh;
+}
+.game:hover {
+    transform: scale(1.1);
+}
+.game img {
+    height: calc(100% - 4px - 4px);
+    max-height: calc(9vh - 8px);
+	border-radius: 15px;
+	aspect-ratio: 1 / 1;
+    margin: 4px;
+    justify-self: left;
+    margin-right: auto;
+}
+#holder h1 {
+    font-size: 14px;
+    margin: 15px;
+    width: 80%;
+    text-align: right;
+    height: 70%;
+}
+#holder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+#star {
+    margin-top: 0px;
+    width: 10%;
+    margin-left: auto;
+    margin-right: 15px;
+    /* transition-duration: 0.25s; */
+}
+#star:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 5px var(--color-1))
+}
+#games, #starredgames, #topGames, #recentgames {
+    width: 90vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 100%;
+    gap: 0px;
+}
+
+#noResults, #loadingMsg {
+    font-size: 24px;
+    color: var(--color-1);
+}
+#starredHeader, #allHeader, #topHeader, #recentHeader {
+    font-size: 32px;
+    color: var(--color-1);
+}
+#noResults, #starredHeader, #allHeader, #topHeader, #recentHeader {
+    display: none;
+}
+body {
+    justify-content: flex-start;
+}
+.gamesToolbar {
+    width: 90vw;
+    max-width: 700px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0 4px;
+}
+.gamesToolbar .searchbar {
+    flex: 2 1 320px;
+    width: auto;
+    margin: 0;
+    padding: 16px 20px;
+    font-size: 18px;
+}
+.gamesToolbar #gamesort,
+.gamesToolbar #randomGame,
+.gamesToolbar #filtersToggle {
+    margin: 0;
+    flex: 0 0 auto;
+}
+.gamesToolbar #randomGame:hover,
+.gamesToolbar #filtersToggle:hover {
+    filter: brightness(1.1);
+    box-shadow: none;
+    transform: none;
+}
+.gamesToolbar #filtersToggle.hasActive {
+    background-color: var(--color-1);
+    border-color: var(--color-1);
+    color: var(--bg-2);
+    font-weight: bold;
+}
+.gamesToolbar #filtersToggle.open {
+    box-shadow: inset 0 0 0 2px var(--text-color);
+}
+#tagFilters {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 90vw;
+    max-width: 700px;
+    margin: 4px 0 10px;
+}
+#tagFilters.open {
+    display: flex;
+}
+#tagFilters #gamesort {
+    margin: 0;
+}
+.filterLabel {
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-color);
+    margin: 0;
+}
+#tagChipsLabel {
+    margin-top: 8px;
+}
+#tagChips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+.tagChip {
+    border-style: solid;
+    border-width: 2px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--color-2) 40%, #00000000 60%);
+    border-color: var(--color-3);
+    color: var(--text-color);
+    outline: none;
+    transition-duration: 0.25s;
+    font-size: 13px;
+    cursor: pointer;
+}
+.tagChip:hover {
+    filter: brightness(1.15);
+}
+.tagChip.active {
+    background-color: var(--color-1);
+    border-color: var(--color-1);
+    color: var(--bg-2);
+    font-weight: bold;
+}
+#gamesort {
+    border-style: solid;
+    border-width: 2px;
+    padding: 10px 18px;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: var(--color-2);
+    border-color: var(--color-3);
+    color: var(--text-color);
+    outline: none;
+    transition-duration: 0.25s;
+    font-size: 16px;
+    cursor: pointer;
+}
+#gamesort:hover {
+    filter: brightness(1.1);
+}
+warnings {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+warning {
+    width: 20px;
+    height: 20px;
+    color: var(--text-color);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4px;
+    font-size: 12px;
+}
+.gore {
+    background-color: rgb(100, 20, 20);
+    box-shadow: 0 0 10px rgb(100, 20, 20);
+}
+.thirteen {
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+}
+.horror {
+    background-color: rgb(118, 118, 118);
+    box-shadow: 0 0 10px rgb(193, 193, 193);
+}
+body[fast] .game {
+    background-color: color-mix(in srgb, var(--color-2) 70%, #000000 30%);
+}
+@media screen and (max-width: 900px) {
+	.game {
+	  width: 40vw;
+	}
+}
+@media screen and (max-width: 660px) {
+	.game {
+	  width: 60vw;
+	}
+}

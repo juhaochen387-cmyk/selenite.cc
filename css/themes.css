@@ -1,0 +1,54 @@
+body {
+ --text-color: #fff;
+ --bg-1: #5a189a;
+ --bg-2: #10002b;
+ --color-1: #E0AAFF;
+ --color-2: #7B2CBF;
+ --color-3: #3C096C;
+ --color-4: #240046;
+}
+body[theme=blackandwhite] {
+ --text-color: #fff;
+ --bg-1: #504d53;
+ --bg-2: #090909;
+ --color-1: #bfbfbf;
+ --color-2: #8e8e8e;
+ --color-3: #5c5c5c;
+ --color-4: #000000;
+}
+body[theme=grass] {
+ --text-color: #ffffff;
+ --bg-1: #385041;
+ --bg-2: #1d3024;
+ --color-1: #a8e5a7;
+ --color-2: #559b7a;
+ --color-3: #3a5c3f;
+ --color-4: #242e22;
+}
+body[theme=evil] {
+ --text-color: #ffffff;
+ --bg-1: #ba2a2a;
+ --bg-2: #591414;
+ --color-1: #eb8181;
+ --color-2: #ae4141;
+ --color-3: #7b3838;
+ --color-4: #4f2626;
+}
+body[theme=sky] {
+ --text-color: #ffffff;
+ --bg-1: #5d9dae;
+ --bg-2: #3c7aa6;
+ --color-1: #04eeff;
+ --color-2: #2ab9f2;
+ --color-3: #3188bd;
+ --color-4: #23588a;
+}
+body[theme=xmas] {
+ --text-color: #dcffab;
+ --bg-1: #a00000;
+ --bg-2: #400000;
+ --color-1: #dcffab;
+ --color-2: #a32a2a;
+ --color-3: #000000;
+ --color-4: #630000;
+}

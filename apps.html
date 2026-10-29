@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html class="sl-theme-dark" lang="en">
+
+<head><meta charset="utf-8"><script src="./js/offline-data.js"></script><script src="./js/offline-runtime.js"></script>
+ 
+
+ <!-- initialize theme vars
+ https://coolors.co/10002b-240046-3c096c-5a189a-7b2cbf-9d4edd-c77dff-e0aaff -->
+
+ <!-- initialize my stuff -->
+ <script src="js/all.min.js" async></script>
+ <script>let type = "a";</script>
+ <script src="js/loader.js"></script>
+ <script src="js/main.js"></script>
+
+
+ <link rel="stylesheet" href="css/main.css" />
+ <link rel="stylesheet" href="css/pages.css" />
+ <link rel="stylesheet" href="css/games.css" />
+
+
+ <!-- seo + other things -->
+ <title>Projects | Selenite</title>
+ <link rel="icon" href="favicon.ico" />
+
+ <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+ <!-- toastify -->
+ 
+ <script></script>
+</head>
+
+<body>
+ <div class="gamesToolbar">
+ <input type="text" class="searchbar" id="gamesearch" placeholder="Type here to search.." />
+ <button id="filtersToggle" type="button">filters</button>
+ <button id="randomGame">random app</button>
+ </div>
+ <div id="tagFilters">
+ <p class="filterLabel">sorting</p>
+ <select id="gamesort">
+ <option value="az">a -> z</option>
+ <option value="za">z -> a</option>
+ <option value="new">newest</option>
+ <option value="played">your top apps</option>
+ <option value="global">global top apps</option>
+ </select>
+ <p class="filterLabel" id="tagChipsLabel">game genres</p>
+ <div id="tagChips"></div>
+ </div>
+ <p id="gameCount">xx apps loaded..</p>
+ <p id="starredHeader">starred apps</p>
+ <div id="starredgames"></div>
+ <p id="recentHeader">recently played</p>
+ <div id="recentgames"></div>
+ <p id="allHeader" class="title">all apps</p>
+ <div id="games">
+ <p id="loadingMsg">apps loading..</p>
+ <p id="noResults">nothing was found! try a new search query.</p>
+ </div>
+</body>
+
+</html>

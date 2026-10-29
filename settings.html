@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><meta charset="utf-8"><script src="./js/offline-data.js"></script><script src="./js/offline-runtime.js"></script>
+ 
+
+ <!-- initialize theme vars
+ https://coolors.co/10002b-240046-3c096c-5a189a-7b2cbf-9d4edd-c77dff-e0aaff -->
+
+ <!-- initialize externals -->
+ <!-- chroma.js -->
+ <script src="vendor/js/chroma.min.js"></script>
+
+ <script type="application/ld+json">
+ {
+ "@context": "https://schema.org",
+ "@type": "Organization",
+ "name": "Selenite",
+ "alternateName": "selenite.cc",
+ "url": "https://selenite.cc",
+ "logo": "https://selenite.cc/favicon.png",
+ "sameAs": [
+ "https://github.com/selenite-cc",
+ "https://youtube.com/@selenitecc",
+ "https://tiktok.com/@selenitecc",
+ "https://selenite.cc",
+ ]
+ }
+ </script>
+
+ <!-- initialize my stuff -->
+ <script src="js/all.min.js" async></script>
+ <script src="js/main.js"></script>
+ <!-- <script src="js/widget.js"></script> -->
+
+ <link rel="stylesheet" href="css/main.css" />
+ <link rel="stylesheet" href="css/pages.css" />
+ <link rel="stylesheet" href="css/settings.css" />
+ 
+ <!-- seo + other things -->
+ <title>Selenite</title>
+ <link rel="icon" href="favicon.ico" />
+ <script>
+ let cloaks = {
+ "powerschool": [
+ "Grades and Attendance", "https://www.powerschool.com/"
+ ],
+ "canvas": [
+ "Dashboard", "https://usc.instructure.com/"
+ ],
+ "google": [
+ "Google", "https://google.com/"
+ ],
+ "drive": [
+ "My Drive - Google Drive", "https://drive.google.com"
+ ],
+ "classroom": [
+ "Home", "https://google-classroom.en.softonic.com"
+ ],
+ "khan": [
+ "Dashboard | Khan Academy", "https://www.khanacademy.org/favicon.ico"
+ ]
+ }
+ document.addEventListener("DOMContentLoaded", () => {
+ document.querySelector(`option[value="${localStorage.getItem("selenite.theme") || ""}"]`).setAttribute("selected", "");
+ document.getElementById("toggleCDN").checked = localStorage.getItem("selenite.disableCDN") ? false : true;
+ if (document.getElementById("themes").value == "custom") {
+ document.getElementById("colorPicker").style.display = "block";
+ document.getElementById("colorPicker").value = localStorage.getItem("selenite.customThemeMainColor");
+ } else {
+ document.getElementById("colorPicker").style.display = "none";
+ }
+ if (localStorage.getItem("selenite.fast-mode") == 'true') {
+ document.getElementById("fastMode").setAttribute("checked", "")
+ };
+ if (localStorage.getItem("selenite.super-fast-mode") == 'true') {
+ document.getElementById("superFastMode").setAttribute("checked", "")
+ };
+ if (localStorage.getItem("selenite.disableTopGames") == 'true') {
+ document.getElementById("topGamesToggle").setAttribute("checked", "")
+ };
+ if (localStorage.getItem("selenite.disableRecentlyPlayed") == 'true') {
+ document.getElementById("recentlyPlayedToggle").setAttribute("checked", "")
+ };
+ try {
+ const savedPanic = JSON.parse(localStorage.getItem("selenite.panic-mode") || "null");
+ if (savedPanic && savedPanic.key && savedPanic.url) {
+ document.getElementById("panicKey").value = savedPanic.key;
+ document.getElementById("panicURL").value = savedPanic.url;
+ }
+ } catch { }
+ document.getElementById("themes").addEventListener("input", (e) => {
+ localStorage.setItem("selenite.theme", e.target.value);
+ document.body.setAttribute("theme", e.target.value);
+ if (e.target.value == "custom") {
+ document.getElementById("colorPicker").style.display = "block";
+ document.getElementById("colorPicker").value = localStorage.getItem("selenite.customThemeMainColor");
+ } else {
+ document.getElementById("colorPicker").style.display = "none";
+ document.body.removeAttribute("style");
+ }
+ });
+ document.getElementById("colorPicker").addEventListener("input", (e) => {
+ let generatedTheme = generatePallete(e.target.value);
+ localStorage.setItem("selenite.customTheme", JSON.stringify(generatedTheme));
+ localStorage.setItem("selenite.customThemeMainColor", e.target.value);
+ setTheme(generatedTheme);
+
+ })
+ document.getElementById("fastMode").addEventListener("click", (e) => {
+ localStorage.setItem("selenite.fast-mode", !(e.target.checked == false));
+ location.reload();
+ });
+ document.getElementById("superFastMode").addEventListener("click", (e) => {
+ localStorage.setItem("selenite.super-fast-mode", !(e.target.checked == false));
+ location.reload();
+ });
+ document.getElementById("topGamesToggle").addEventListener("click", (e) => {
+ localStorage.setItem("selenite.disableTopGames", e.target.checked ? "true" : "false");
+ });
+ document.getElementById("recentlyPlayedToggle").addEventListener("click", (e) => {
+ localStorage.setItem("selenite.disableRecentlyPlayed", e.target.checked ? "true" : "false");
+ });
+ document.getElementById("submitCloak").addEventListener("click", () => {
+ const feedback = document.getElementById("cloakFeedback");
+ const presetValue = document.getElementById("cloaks").value;
+ let name, icon;
+ if (presetValue) {
+ name = cloaks[presetValue][0];
+ icon = cloaks[presetValue][1];
+ } else {
+ name = document.getElementById("cloakName").value.trim();
+ icon = document.getElementById("cloakIcon").value.trim();
+ }
+ localStorage.setItem("selenite.tab-cloak", JSON.stringify({ name, icon }));
+ if (!name && !icon) {
+ feedback.textContent = "tab cloak reset to default.";
+ feedback.className = "feedback";
+ } else {
+ feedback.textContent = `tab cloak set to "${name || "Selenite"}"!`;
+ feedback.className = "feedback success";
+ }
+ });
+ document.getElementById("submitPanic").addEventListener("click", () => {
+ const feedback = document.getElementById("panicFeedback");
+ const key = document.getElementById("panicKey").value.trim();
+ let url = document.getElementById("panicURL").value.trim();
+
+ if (!key) {
+ feedback.textContent = "enter a key to trigger panic mode.";
+ feedback.className = "feedback error";
+ return;
+ }
+ if (!url) {
+ feedback.textContent = "enter a website to redirect to.";
+ feedback.className = "feedback error";
+ return;
+ }
+ if (!/^https?:\/\//i.test(url)) {
+ url = "https://" + url;
+ }
+ try {
+ new URL(url);
+ } catch {
+ feedback.textContent = "that doesn't look like a valid website url.";
+ feedback.className = "feedback error";
+ return;
+ }
+
+ localStorage.setItem("selenite.panic-mode", JSON.stringify({ key, url }));
+ document.getElementById("panicURL").value = url;
+ feedback.textContent = `panic mode saved! press "${key}" to instantly leave.`;
+ feedback.className = "feedback success";
+ });
+ document.getElementById("submitProxyUnlock").addEventListener("click", () => {
+ const feedback = document.getElementById("proxyUnlockFeedback");
+ const passwordInput = document.getElementById("proxyPassword");
+ const password = passwordInput.value;
+
+ if (!password) {
+ feedback.textContent = "enter a password.";
+ feedback.className = "feedback error";
+ return;
+ }
+
+ fetch("/api/proxy/unlock", {
+ method: "POST",
+ headers: { "Content-Type": "application/json" },
+ body: JSON.stringify({ password }),
+ })
+ .then((res) => res.json())
+ .then((data) => {
+ if (data.success) {
+ feedback.textContent = "beta access granted!";
+ feedback.className = "feedback success";
+ passwordInput.value = "";
+ } else {
+ feedback.textContent = data.message || "incorrect password.";
+ feedback.className = "feedback error";
+ }
+ })
+ .catch(() => {
+ feedback.textContent = "failed to reach the server.";
+ feedback.className = "feedback error";
+ });
+ });
+ document.getElementById("toggleCDN").addEventListener("change", () => {
+ let toggle = document.getElementById("toggleCDN");
+ if (toggle.checked) {
+ localStorage.removeItem("selenite.disableCDN");
+ } else {
+ localStorage.setItem("selenite.disableCDN", "true")
+ }
+ });
+ initHiddenGameSettings();
+ function generatePallete(color) {
+ let theme = {};
+ let chromaColor = chroma(color);
+ theme["color-1"] = chromaColor.hex();
+ theme["color-2"] = chromaColor.darken(1).hex();
+ theme["color-3"] = chromaColor.darken(2).hex();
+ theme["color-4"] = chromaColor.darken(3).hex();
+ theme["bg-1"] = chromaColor.darken(1.5).hex();
+ theme["bg-2"] = chromaColor.darken(2.5).hex();
+ theme["text-color"] = "#fff"
+ return theme;
+ }
+ });
+
+ function getHiddenGames() {
+ try {
+ const parsed = JSON.parse(localStorage.getItem("selenite.hiddenGames") || "[]");
+ return parsed;
+ } catch {
+ return [];
+ }
+ }
+
+ function setHiddenGames(games) {
+ localStorage.setItem("selenite.hiddenGames", JSON.stringify(games));
+ }
+
+ function updateHiddenGamesCount(total) {
+ const hiddenCount = getHiddenGames().length;
+ const countEl = document.getElementById("hiddenGamesCount");
+ countEl.innerText = `${hiddenCount} hidden${total ? ` / ${total} total` : ""}`;
+ }
+
+ function renderHiddenGameList(games, hiddenSet, filter = "") {
+ const list = document.getElementById("hiddenGamesList");
+ list.innerHTML = "";
+
+ const input = filter.trim().toUpperCase();
+ const shown = games.filter((game) => game.name.toUpperCase().includes(input));
+
+ if (shown.length === 0) {
+ const empty = document.createElement("p");
+ empty.innerText = "no games matched your search";
+ list.appendChild(empty);
+ return;
+ }
+
+ shown.forEach((game) => {
+ const row = document.createElement("label");
+ row.className = "hidden-game-row";
+
+ const checkbox = document.createElement("input");
+ checkbox.type = "checkbox";
+ checkbox.checked = hiddenSet.has(game.directory);
+ checkbox.addEventListener("change", () => {
+ const next = new Set(getHiddenGames());
+ if (checkbox.checked) next.add(game.directory);
+ else next.delete(game.directory);
+ const hidden = [...next].sort();
+ setHiddenGames(hidden);
+ updateHiddenGamesCount(games.length);
+ });
+
+ const box = document.createElement("span");
+ box.className = "checkboxBox";
+
+ const text = document.createElement("span");
+ text.innerText = game.name;
+
+ row.appendChild(checkbox);
+ row.appendChild(box);
+ row.appendChild(text);
+ list.appendChild(row);
+ });
+ }
+
+ async function initHiddenGameSettings() {
+ const searchInput = document.getElementById("hiddenGamesSearch");
+ let games = [];
+ try {
+ games = await (await fetch("/resources/games.json")).json();
+ } catch {
+ document.getElementById("hiddenGamesList").innerHTML = "<p>failed to load games list</p>";
+ return;
+ }
+
+ games.sort((a, b) => a.name.localeCompare(b.name));
+
+ renderHiddenGameList(games, new Set(getHiddenGames()));
+ updateHiddenGamesCount(games.length);
+
+ searchInput.addEventListener("input", () => {
+ renderHiddenGameList(games, new Set(getHiddenGames()), searchInput.value);
+ });
+
+ document.getElementById("unhideAllGames").addEventListener("click", () => {
+ const feedback = document.getElementById("hiddenGamesFeedback");
+ const previousCount = getHiddenGames().length;
+ setHiddenGames([]);
+ renderHiddenGameList(games, new Set(), searchInput.value);
+ updateHiddenGamesCount(games.length);
+ if (feedback) {
+ if (previousCount > 0) {
+ feedback.textContent = `unhid ${previousCount} game${previousCount === 1 ? "" : "s"}!`;
+ feedback.className = "feedback success";
+ } else {
+ feedback.textContent = "no games were hidden.";
+ feedback.className = "feedback";
+ }
+ }
+ });
+ }
+
+ function clearRecentlyPlayed() {
+ localStorage.removeItem("selenite.recentlyPlayed");
+ }
+
+ function wipeData() {
+ if (prompt("Wiping your data means you will lose all progress in every game, and every setting you have selected.\nAre you sure you would like to continue?\n\nType \"please wipe my data\" to continue.") == "please wipe my data") {
+ localStorage.clear();
+ document.cookie.split(";").forEach(e => {
+ document.cookie = e.split("=")[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
+ })
+ }
+ }
+ function setDataFeedback(message, type) {
+ const el = document.getElementById("dataFeedback");
+ if (!el) return;
+ el.textContent = message;
+ el.className = "feedback" + (type ? " " + type : "");
+ }
+ function downloadData() {
+ try {
+ const data = JSON.stringify({
+ localStorage: { ...localStorage },
+ cookies: document.cookie
+ });
+ const file = new Blob([data], { type: "application/json" });
+ const url = URL.createObjectURL(file);
+ const a = document.createElement("a");
+ a.href = url;
+ a.download = "selenite.dat";
+ a.click();
+ URL.revokeObjectURL(url);
+ setDataFeedback("data downloaded!", "success");
+ } catch (err) {
+ setDataFeedback("failed to download data: " + err.message, "error");
+ }
+ }
+ function parseBackup(text) {
+ let data;
+ try {
+ data = JSON.parse(text);
+ } catch {
+ // fall back to the old base64 + double-stringified-localStorage format
+ data = JSON.parse(atob(text));
+ }
+ if (!data || typeof data.cookies !== "string") {
+ throw new Error("this file doesn't look like a selenite backup.");
+ }
+ let local = data.localStorage;
+ if (typeof local === "string") local = JSON.parse(local);
+ if (!local || typeof local !== "object") {
+ throw new Error("this file doesn't look like a selenite backup.");
+ }
+ return { localStorage: local, cookies: data.cookies };
+ }
+ function uploadData() {
+ const input = document.createElement("input");
+ input.type = "file";
+ input.accept = ".dat,application/json";
+ input.addEventListener("change", e => {
+ const file = e.target.files[0];
+ if (!file) return;
+ if (prompt("Are you sure you want to upload data?\nThis may overwrite any previous data you had stored.\n\nType \"i am sure\" to continue.") != "i am sure") return;
+
+ const fileReader = new FileReader();
+ fileReader.addEventListener("load", e => {
+ try {
+ const { localStorage: local, cookies } = parseBackup(e.target.result);
+
+ document.cookie.split(";").forEach(c => {
+ const name = c.split("=")[0].trim();
+ if (name) document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+ });
+ cookies.split(";").forEach(c => {
+ c = c.trim();
+ if (c) document.cookie = c;
+ });
+ Object.keys(local).forEach(key => {
+ localStorage.setItem(key, local[key]);
+ });
+
+ setDataFeedback("data uploaded! reload the page to see changes.", "success");
+ } catch (err) {
+ setDataFeedback("failed to upload data: " + err.message, "error");
+ }
+ });
+ fileReader.addEventListener("error", () => {
+ setDataFeedback("failed to read that file.", "error");
+ });
+ fileReader.readAsText(file);
+ });
+ input.click();
+ };
+ async function deleteAllCaches() {
+ try {
+ const cacheNames = await caches.keys();
+
+ await Promise.all(
+ cacheNames.map(cacheName => {
+ return caches.delete(cacheName);
+ })
+ );
+ } catch { }
+ }
+ </script>
+</head>
+
+<body>
+ <h1 class="title">settings</h1>
+ <sections>
+ <section>
+ <h2>style</h2>
+ <p style="font-size:20px;margin:6px;">themes</p>
+ <select id="themes">
+ <option value="">selenite</option>
+ <option value="xmas">CHRISTMAS! (limited)</option>
+ <option value="blackandwhite">black and white</option>
+ <option value="grass">grass</option>
+ <option value="evil">evil</option>
+ <option value="sky">sky</option>
+ <option value="custom">custom</option>
+ </select>
+ <input type="color" id="colorPicker" style="display: none">
+ <p style="font-size:20px;margin:6px;">toggles</p>
+ <div class="toggleRow"><label class="switch"><input type="checkbox" id="fastMode"><span
+ class="switchTrack"></span></label><label for="fastMode"
+ title="disables particles, animated background, & other misc effects">fast mode</label></div>
+ <div class="toggleRow"><label class="switch"><input type="checkbox" id="superFastMode"><span
+ class="switchTrack"></span></label><label for="superFastMode"
+ title="disables all blurs and transparency">super fast mode</label></div>
+ <div class="toggleRow"><label class="switch"><input type="checkbox" id="topGamesToggle"><span
+ class="switchTrack"></span></label><label for="topGamesToggle">disable top
+ games</label></div>
+ <div class="toggleRow"><label class="switch"><input type="checkbox" id="recentlyPlayedToggle"><span
+ class="switchTrack"></span></label><label for="recentlyPlayedToggle">disable
+ recently played</label></div>
+ </section>
+ <section>
+ <h2>tab cloak</h2>
+ <p>website name</p>
+ <input type="text" id="cloakName">
+ <p>website icon</p>
+ <input type="text" id="cloakIcon">
+ <select id="cloaks">
+ <option value="">or select a preset</option>
+ <option value="powerschool">powerschool</option>
+ <option value="canvas">canvas</option>
+ <option value="google">google</option>
+ <option value="drive">google drive</option>
+ <option value="classroom">google classroom</option>
+ <option value="khan">khan academy</option>
+ </select>
+
+ <button id="submitCloak">set tab cloak</button>
+ <p id="cloakFeedback" class="feedback"></p>
+ </section>
+ <section>
+ <h2>panic mode</h2>
+ <p title="the key you need to click to automatically exit selenite">key</p>
+ <input type="text" id="panicKey" maxlength="1">
+ <p title="the url itll direct you to">website</p>
+ <input type="text" id="panicURL">
+ <button id="submitPanic">set panic mode</button>
+ <p id="panicFeedback" class="feedback"></p>
+ </section>
+ <section>
+ <h2>manage data</h2>
+ <button onclick="downloadData()">download</button>
+ <button onclick="uploadData()">upload</button>
+ <button onclick="wipeData()">wipe (erases all game data)</button>
+ <button onclick="deleteAllCaches()">wipe all cache</button>
+ <button onclick="clearRecentlyPlayed()">clear recently played</button>
+ <div class="toggleRow"><label class="switch"><input disabled id="toggleCDN" name="toggleCDN" type="checkbox"><span
+ class="switchTrack"></span></label><label for="toggleCDN">cdn enabled (online only)</label></div>
+ <p id="dataFeedback" class="feedback"></p>
+ </section>
+ <section id="hiddenGamesSection">
+ <h2>hidden games</h2>
+ <p id="hiddenGamesCount">0 hidden</p>
+ <div class="hiddenGamesRow">
+ <div class="hiddenGamesControls">
+ <input type="text" id="hiddenGamesSearch" placeholder="search games">
+ <button id="unhideAllGames">unhide all</button>
+ <p id="hiddenGamesFeedback" class="feedback"></p>
+ </div>
+ <div id="hiddenGamesList"></div>
+ </div>
+ </section>
+ <section>
+ <h2>beta access</h2>
+ <p title="the secret password for beta access">password</p>
+ <input type="password" id="proxyPassword" disabled autocomplete="off">
+ <button id="submitProxyUnlock" disabled>unlock</button>
+ <p id="proxyUnlockFeedback" class="feedback">requires the original online service</p>
+ </section>
+ </sections>
+</body>
+
+</html>

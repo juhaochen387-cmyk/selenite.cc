@@ -1,0 +1,40 @@
+name: Build offline download
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['tools/**', '.github/workflows/offline-package.yml']
+permissions:
+  contents: write
+concurrency:
+  group: offline-release
+  cancel-in-progress: false
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make space for the game library
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -h .
+      - name: Prepare offline game and app files
+        run: python3 tools/prepare-library.py
+      - name: Validate catalog and local dependencies
+        run: |
+          node --check js/offline-runtime.js
+          python3 - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('.')
+          games=json.loads((p/'resources/games.json').read_text())
+          apps=json.loads((p/'resources/apps.json').read_text())
+          assert len(games)==427 and len(apps)==15
+          for group,items in [('semag',games),('sppa',apps)]:
+              for game in items: assert (p/'resources'/group/game['directory']/'index.html').is_file()
+          print('All 442 catalog entry points exist.')
+          PY
+      - name: Package, verify and publish split download
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/package-release.py --release offline-${{ github.run_number }} --repository "$GITHUB_REPOSITORY" --output "$RUNNER_TEMP/offline-build"

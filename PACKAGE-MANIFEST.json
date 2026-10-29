@@ -1,0 +1,17 @@
+{
+  "package": "Selenite offline adaptation",
+  "user_archive_incomplete": true,
+  "live_site_match_verified": false,
+  "mirror_commit": "5310d925eb6e1d6b5fec23a8b2e3cf77bc163f22",
+  "game_entries": 427,
+  "app_entries": 15,
+  "direct_file_browser_verification": "Blocked by execution environment browser policy",
+  "tested_route": "Local HTTP, outside requests blocked",
+  "native_launcher_platforms": [
+    "Windows x64",
+    "Linux x64",
+    "Mac arm64",
+    "Mac x64"
+  ],
+  "game_functionality_exhaustively_verified": false
+}

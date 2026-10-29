@@ -1,9 +1,23 @@
 # Selenite offline adaptation
 
-An offline adaptation of Selenite, prepared from the supplied partial website archive, recovered frontend text, and the public source mirror at commit `5310d925eb6e1d6b5fec23a8b2e3cf77bc163f22`.
+[Download the full offline package from Releases](https://github.com/juhaochen387-cmyk/selenite.cc/releases/latest) · [Build status](https://github.com/juhaochen387-cmyk/selenite.cc/actions/workflows/offline-package.yml)
 
-This is **not a verified exact snapshot of today's live site**. The game/app library is from March 2025. Online accounts, profiles, friends, live rankings, multiplayer servers, weather and proxy services require online servers. Some games still have missing dependencies or browser-engine requirements.
+The full package includes **427 game entries and 15 app entries**, local assets, browser-readable data bundles, and optional no-install Windows/Mac/Linux launchers. The release is about **8.4 GB compressed / 12 GB extracted** and is published in five parts because of GitHub's file limits. Follow the joining instructions in the release, extract it completely, then open `index.html`.
 
-The prepared package contains 427 game entries and 15 app entries. Core interactions and representative HTML5, Flash and Unity titles were tested with external requests blocked. Direct file-scheme behavior was not verified in the original execution environment because its browser policy blocks file URLs.
+If the first release is still building, the build-status link shows its progress. A successful run publishes the complete download automatically.
 
-The editable source and automated package build are being added to this repository. The full package is approximately 8.4 GB compressed and 12 GB extracted; it exceeds GitHub's regular repository-file limit. A release build will publish download parts, checksums and extraction instructions.
+## What this repository contains
+
+This repository contains the editable application, fonts and runtime libraries, source for the optional local launcher, recorded verification results, and the package-building tools. The game/app binaries are distributed in Releases rather than regular Git commits.
+
+**GitHub's “Code → Download ZIP” is the application source, not the complete game library.** Use the Release download for the prepared offline copy. To prepare the library from a source checkout yourself, run `python3 tools/prepare-library.py` once while online. This downloads the pinned public mirror (several GB) and creates the local data bundles. There is no build step after setup: open `index.html`, or run the included launcher if an engine requires HTTP.
+
+## Limits
+
+This is **not a verified exact snapshot of today's live site**. The uploaded ZIP was missing its catalog, game files, thumbnails and main site pages. Frontend text was recovered from the current public code viewer; the complete available game/app library comes from the public mirror at commit `5310d925eb6e1d6b5fec23a8b2e3cf77bc163f22` (March 6, 2025). Catalog details and content can differ from today's site.
+
+Online accounts, profiles, friends, live rankings, multiplayer servers, weather and proxy services require their original online servers. Some games retain missing dependencies or engine requirements. All catalog entry points are present; gameplay was not exhaustively verified.
+
+Core browser checks passed with outside requests blocked: navigation, catalog/search/empty states, favorites, sorting, themes/custom colors, hidden games and 2048 gameplay. Ruffle Minesweeper, Unity Slope and Cookie Clicker were exercised through the local data layer. Direct file-scheme behavior was not verified in the original execution environment because its browser policy blocks file URLs. Linux launcher tested; Windows/Mac binaries cross-compiled.
+
+Read [READ-ME-FIRST.md](READ-ME-FIRST.md) for running instructions, sources and complete verification limits. Original game/library license files are retained where supplied.
