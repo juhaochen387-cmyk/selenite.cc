@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Populate the offline library from the pinned public source mirror (one-time online setup)."""
 from pathlib import Path
-import argparse,base64,concurrent.futures,hashlib,json,mimetypes,os,re,shutil,tarfile,urllib.request
+import argparse,base64,concurrent.futures,hashlib,json,mimetypes,os,re,shutil,subprocess,tempfile
 
 ROOT=Path(__file__).resolve().parent.parent
 COMMIT='5310d925eb6e1d6b5fec23a8b2e3cf77bc163f22'
@@ -18,18 +18,26 @@ def get_library(source=None):
    dest=ROOT/'resources'/group
    if not dest.exists():shutil.copytree(Path(source)/group,dest,copy_function=os.link)
   return
- print('Downloading the pinned game/app library. This can take several minutes.',flush=True)
- with urllib.request.urlopen(URL,timeout=300) as response,tarfile.open(fileobj=response,mode='r|gz') as archive:
-  count=0
-  for member in archive:
-   parts=Path(member.name).parts[1:]
-   if not parts or parts[0] not in ['semag','sppa'] or not member.isfile():continue
-   if any(p in ['..',''] for p in parts):raise ValueError('Unsafe archive member')
-   dest=ROOT/'resources'/Path(*parts);dest.parent.mkdir(parents=True,exist_ok=True)
-   with archive.extractfile(member) as inp,dest.open('wb') as out:shutil.copyfileobj(inp,out,1024*1024)
-   count+=1
-   if count%2000==0:print('Extracted',count,'files',flush=True)
- print('Library downloaded.',flush=True)
+ print('Fetching the pinned game/app library with Git. This can take several minutes.',flush=True)
+ # Large GitLab archive responses can be truncated. Git checks every object
+ # before checkout and permits retrying the exact immutable commit.
+ with tempfile.TemporaryDirectory(prefix='selenite-mirror-') as temp:
+  checkout=Path(temp)
+  subprocess.run(['git','init',str(checkout)],check=True)
+  subprocess.run(['git','-C',str(checkout),'remote','add','origin','https://gitlab.com/skysthelimit.dev/selenite.git'],check=True)
+  subprocess.run(['git','-C',str(checkout),'fetch','--depth','1','origin',COMMIT],check=True)
+  subprocess.run(['git','-C',str(checkout),'checkout','--detach','FETCH_HEAD'],check=True)
+  actual=subprocess.check_output(['git','-C',str(checkout),'rev-parse','HEAD'],text=True).strip()
+  assert actual==COMMIT,'Mirror checkout does not match the pinned commit'
+  def copy_asset(src,dest):
+   if Path(src).is_symlink():raise ValueError('Unexpected symbolic link in source archive')
+   try:os.link(src,dest)
+   except OSError:shutil.copy2(src,dest)
+  for group in ['semag','sppa']:
+   dest=ROOT/'resources'/group
+   if dest.exists():shutil.rmtree(dest)
+   shutil.copytree(checkout/group,dest,copy_function=copy_asset)
+ print('Pinned library checkout verified.',flush=True)
 
 def relative(url,page):
  path=url[1:].split('?')[0]

@@ -19,7 +19,8 @@ checksums=[digest+'  selenite-offline.zip']
 print('Verified ZIP:',zip_path.stat().st_size,'bytes;',len(files),'files;',digest,flush=True)
 if args.release:
  assert args.repository,'--repository is required for uploads'
- subprocess.run(['gh','release','create',args.release,'--repo',args.repository,'--draft','--title','Selenite offline adaptation','--notes-file',str(ROOT/'RELEASE-NOTES.md')],check=True)
+ target=os.environ.get('GITHUB_SHA') or subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip()
+ subprocess.run(['gh','release','create',args.release,'--repo',args.repository,'--target',target,'--draft','--title','Selenite offline adaptation','--notes-file',str(ROOT/'RELEASE-NOTES.md')],check=True)
  names=[]
  with zip_path.open('rb') as archive:
   part_number=0

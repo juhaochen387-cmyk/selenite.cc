@@ -5,7 +5,7 @@
   "mirror_commit": "5310d925eb6e1d6b5fec23a8b2e3cf77bc163f22",
   "game_entries": 427,
   "app_entries": 15,
-  "direct_file_browser_verification": "Blocked by execution environment browser policy",
+  "direct_file_browser_verification": "Passed standard Chrome on GitHub Actions: index opening, navigation, cross-page storage, 2048 and Ruffle SWF loading; no external requests",
   "tested_route": "Local HTTP, outside requests blocked",
   "native_launcher_platforms": [
     "Windows x64",
@@ -13,5 +13,6 @@
     "Mac arm64",
     "Mac x64"
   ],
-  "game_functionality_exhaustively_verified": false
+  "game_functionality_exhaustively_verified": false,
+  "direct_html_test_run": "https://github.com/juhaochen387-cmyk/selenite.cc/actions/runs/40791547271"
 }
